@@ -1,0 +1,9 @@
+# AI tooling / editor config
+.claude/
+.cursor/
+.vscode/
+.idea/
+
+# OS junk
+.DS_Store
+Thumbs.db
