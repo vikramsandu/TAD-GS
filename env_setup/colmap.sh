@@ -13,13 +13,14 @@ set -e
 # script is run non-interactively (e.g. `bash colmap.sh`), which skips ~/.bashrc.
 source "$(conda info --base)/etc/profile.d/conda.sh"
 
-# install colmap for preprocess, work with python3.8
+# install colmap for preprocessing, work with python3.8
 conda create -y -n colmap_env python=3.8
 conda activate colmap_env
 pip install opencv-python-headless
 pip install tqdm
 pip install natsort
 pip install Pillow
+pip install open3d  # point cloud downsampling for dense reconstructions
 conda install -y pytorch==1.12.1 -c pytorch -c conda-forge
 conda config --set channel_priority false
 conda install -y colmap -c conda-forge

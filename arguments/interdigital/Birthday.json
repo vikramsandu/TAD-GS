@@ -1,0 +1,5 @@
+{
+  "position_lr_init": 0.00056,
+  "position_lr_final": 5.6e-05,
+  "pcd_downsample": 4
+}

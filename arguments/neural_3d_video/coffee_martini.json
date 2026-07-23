@@ -1,0 +1,5 @@
+{
+  "iterations": 30001,
+  "position_lr_max_steps": 30000,
+  "pcd_downsample": 4
+}

@@ -4,6 +4,23 @@
 .vscode/
 .idea/
 
+# Python
+__pycache__/
+*.pyc
+
+# Build artifacts (compiled CUDA/C++ extensions, packaging metadata)
+build/
+*.egg-info/
+*.so
+*.o
+
 # OS junk
 .DS_Store
 Thumbs.db
+data
+context_keeper.md
+
+# Benchmark runs: keep only the results .md tables, ignore checkpoints/renders/videos
+runs/**
+!runs/**/
+!runs/**/*.md
