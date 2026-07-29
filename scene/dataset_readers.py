@@ -441,8 +441,8 @@ def readColmapSceneInfoInterdigital(path, images, eval, duration=50,
 
     if eval:
         # 2nd row-2nd column camera for testing.
-        train_cam_infos = [_ for _ in cam_infos if "cam05" not in _.image_name]
-        test_cam_infos = [_ for _ in cam_infos if "cam05" in _.image_name]
+        train_cam_infos = [_ for _ in cam_infos if "cam10" not in _.image_name]
+        test_cam_infos = [_ for _ in cam_infos if "cam10" in _.image_name]
         if len(test_cam_infos) > 0:
             unique_check = []
             for cam_info in test_cam_infos:
