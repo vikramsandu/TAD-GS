@@ -103,6 +103,17 @@ This dataset is not publicly downloadable — request access by emailing the
 authors. See the [Interdigital Light Field Dataset](https://www.interdigital.com/data_sets/light-field-dataset)
 page for details and contact information.
 
+We benchmark on 5 scenes: `Birthday`, `Painter`, `Remy`, `Theater`, and
+`Train`. For preprocessing, follow the Technicolor/Interdigital pipeline from
+[SpacetimeGaussians](https://github.com/oppo-us-research/SpacetimeGaussians#processing-technicolor-dataset)
+with two remarks (this is the setup we benchmark in):
+
+- **Downsample the videos by 2** (i.e. preprocess at half resolution).
+- **Point clouds only need to be computed for every 20th timestep** — TAD-GS
+  reads the initial point cloud from `colmap_<t>/sparse/0/points3D.bin` only
+  for `t = 0, 20, 40, ...` (`init_pcd_every = 20`), so the per-timestep COLMAP
+  triangulation can be skipped for all other timesteps.
+
 ### VRU Basketball
 
 Download the dataset from the [`BestWJH/VRU_Basketball`](https://huggingface.co/datasets/BestWJH/VRU_Basketball/tree/main) Hugging Face repo.
@@ -146,22 +157,23 @@ python render.py --eval --skip_train --valloader colmap --tow \
 
 ## Benchmarking
 
-To reproduce the paper results end-to-end, use the benchmark script. It
-trains → renders → encodes an mp4 → writes a consolidated
-`consolidated_results.md` for **all 6 Neural 3D Video scenes**, so you don't
+To reproduce the paper results end-to-end, use the per-dataset benchmark
+scripts. Each one trains → renders → encodes an mp4 → writes a consolidated
+`consolidated_results.md` for **all scenes of the dataset**, so you don't
 have to run the [Training](#training) and [Evaluation](#evaluation) steps by
 hand.
 
 ```shell
 bash utils/benchmarking/neural_3d_video.sh   # Neural 3D Video (all 6 scenes)
+bash utils/benchmarking/interdigital.sh      # Interdigital (all 5 scenes)
 ```
 
-Outputs are written to `runs/neural_3d_video/<run_id>/<scene>/`, where
+Outputs are written to `runs/<dataset>/<run_id>/<scene>/`, where
 `<run_id>` auto-increments (`0` for the first run, `1` for the next, ...). Each
 scene is trained with the full method (`--vad --tat --tow`) using its per-scene
-config in `arguments/neural_3d_video/`. The consolidated table is written to
-`runs/neural_3d_video/<run_id>/consolidated_results.md` (one row per scene plus
-an average row):
+config in `arguments/<dataset>/`. The consolidated table is written to
+`runs/<dataset>/<run_id>/consolidated_results.md` (one row per scene plus
+an average row). For Neural 3D Video:
 
 | Scene | PSNR | SSIM | MS-SSIM | LPIPS-Alex | Masked-PSNR | Masked-SSIM | Train time |
 |---|---|---|---|---|---|---|---|
@@ -173,8 +185,16 @@ an average row):
 | sear_steak | 34.1498 | 0.9649 | 0.9812 | 0.0768 | 27.2333 | 0.8946 | 01:13:00 |
 | **Average** | **32.4402** | **0.9485** | **0.9726** | **0.0893** | **24.5908** | **0.8625** | **01:15:09** |
 
-> **Note:** benchmarking for [Interdigital](#interdigital) and
-> [VRU Basketball](#vru-basketball) is releasing soon.
+For Interdigital:
+
+| Scene | PSNR | SSIM | MS-SSIM | LPIPS-Alex | Masked-PSNR | Masked-SSIM | Train time |
+|---|---|---|---|---|---|---|---|
+| Birthday | 32.2552 | 0.9491 | 0.9872 | 0.0225 | 27.4094 | 0.9286 | 01:49:59 |
+| Painter | 37.5667 | 0.9665 | 0.9905 | 0.0368 | 32.8796 | 0.9320 | 01:08:07 |
+| Remy | 36.8276 | 0.9559 | 0.9858 | 0.0648 | 30.0809 | 0.9008 | 01:21:13 |
+| Theater | 31.3244 | 0.9154 | 0.9683 | 0.0723 | 26.5516 | 0.8470 | 01:35:58 |
+| Train | 32.6760 | 0.9482 | 0.9889 | 0.0205 | 27.7742 | 0.9037 | 01:35:12 |
+| **Average** | **34.1300** | **0.9470** | **0.9841** | **0.0434** | **28.9391** | **0.9024** | **01:30:06** |
 
 ## Citation
 
