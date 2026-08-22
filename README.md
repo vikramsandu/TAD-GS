@@ -16,6 +16,7 @@
   <a href="https://vikramsandu.github.io/publications/TADGS/index.html"><strong><code>Project Page</code></strong></a>
   <a href="https://arxiv.org/abs/2606.23212"><strong><code>Arxiv Paper</code></strong></a>
   <a href="https://github.com/vikramsandu/TAD-GS"><strong><code>Source Code</code></strong></a>
+  <a href="https://cdn.jsdelivr.net/gh/vikramsandu/TAD-GS@main/assets/tadgs_poster.pdf"><strong><code>Poster</code></strong></a>
 </p>
 
 <div align='center'>
